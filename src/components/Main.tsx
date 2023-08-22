@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import axios from 'axios';
 import requests from '../Requests';
 import { BiInfoCircle } from 'react-icons/bi';
+import { GrPlayFill } from "react-icons/gr";
 
 
 
@@ -25,11 +26,18 @@ const Main: FC = () => {
                 src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} 
                 alt={movie?.title} 
             />
-            <div>
-                <div>
-                    <button className='rounded bg-gray-300 text-xl font-bold text-black border-gray-300 py-4 px-8 ml-8 hover:bg-gray-400'>Play</button>
-                    <button className='rounded text-white text-xl font-bold bg-gray-500  py-4 px-12 ml-4 hover:bg-gray-600'><span className='mr-2'><BiInfoCircle className='inline object-fit pb-[4px]' size='1.2em'/></span>More Info</button>  
+            <div className='absolute w-full top-[20%] p-4 md:p-8'>
+                <h1 className='text-3xl md:text-5xl font-bold'>{movie?.title}</h1>
+                <div className='my-4'>
+                    <button className='rounded bg-gray-300 text-2xl font-bold text-black border-gray-300 py-[15px] px-8 hover:bg-gray-400'><span className='mr-2'><GrPlayFill className='inline object-fit pb-[4px]'/></span>
+                        Play
+                    </button>
+                    <button className='rounded text-white text-2xl font-bold bg-gray-500  py-[15px] px-12 ml-4 hover:bg-opacity-60'><span className='mr-2'><BiInfoCircle className='inline object-fit pb-[4px]' size='1.2em'/></span>
+                        More Info
+                    </button>  
                 </div>
+                <p className='text-gray-400 text-sm'>Released: {movie?.release_date}</p>
+                <p className='w-full md:max-w-[70%] lg:max-w-[50%] xl:max-w-[35%] text-gray-200'>{movie?.overview}</p>
             </div>
         </div>
     </div>

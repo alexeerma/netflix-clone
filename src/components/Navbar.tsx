@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 const Navbar: FC = () => {
   return (
-    <div className='flex items-center justify-between p-8 z-[100] w-full absolute'>
+    <div className='flex items-center justify-between p-8 mx-auto z-[100] w-full absolute'>
         <h1 className='text-red-600 text-4xl font-bold cursor-pointer'>
           NETFLIX
         </h1>
