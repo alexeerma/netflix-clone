@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import axios from 'axios';
 import requests from '../Requests';
 import { BiInfoCircle } from 'react-icons/bi';
 import { GrPlayFill } from "react-icons/gr";
-
 
 
 const Main: FC = () => {
@@ -17,7 +16,7 @@ const Main: FC = () => {
         })
     }, [])
 
-    const truncateString = (str, num) => {
+    const truncateString = (str:string, num:number) => {
         if (str?.length > num) {
           return str.slice(0, num) + '...';
         } else {
