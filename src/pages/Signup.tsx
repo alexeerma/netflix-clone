@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useContext, useRef } from "react";
 import { Link } from 'react-router-dom';
+import { useAuth } from "../provider/AuthProvider";
+
+
+
+interface SignUpFormValues {
+    email: string
+    password: string
+    repeatPassword: string
+  }
+
 
 const Signup = () => {
+
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+
   return (
     <>
       <div className='w-full h-screen'>
@@ -33,7 +47,7 @@ const Signup = () => {
                                 </p>
                                 <p className='text-sm text-gray-500 hover:underline'><a href="/">Need help?</a></p>
                             </div>
-                            <p className='py-4 '>
+                            <p className='py-8'>
                                 <span className='text-gray-500 mr-2'>
                                     Already subscribed to Netflix?
                                 </span> {''}                                   
