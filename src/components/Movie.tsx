@@ -3,15 +3,7 @@ import { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 
-interface movi {
-    id: number;
-    item: [{
-        title?: string | null ;
-    }]
-}
-
-
-const Movie: FC<movi> = ({item}) => {
+const Movie: FC = ({item}) => {
     const [like, setLike] = useState<boolean>(false);
 
 
