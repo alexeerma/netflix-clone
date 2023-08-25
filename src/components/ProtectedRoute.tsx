@@ -1,14 +1,13 @@
-
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../provider/AuthProvider';
+import { useAuth, AuthProviderProps } from '../provider/AuthProvider';
 
 
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = ({children}: AuthProviderProps): JSX.Element => {
   const { user } = useAuth();
     if(!user) {
         return <Navigate to="/login" />
     } else {
-      return children;
+      return <>{children}</>
     }
 }
 
