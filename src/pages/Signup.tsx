@@ -1,21 +1,34 @@
-import React, { useContext, useRef } from "react";
-import { Link } from 'react-router-dom';
+import { FC, useState, FormEvent } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../provider/AuthProvider";
 
 
 
-interface SignUpFormValues {
-    email: string
-    password: string
-    repeatPassword: string
+export interface SignUpFormValues {
+    email: string,
+    password: string,
+    error: string,
   }
 
 
-const Signup = () => {
+const SignUp: FC<SignUpFormValues> = () => {
+    const navigate = useNavigate();
 
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const [email, setEmail] = useState<any>('');
+    const [password, setPassword] = useState<any>('');
+    const {user, signUp} = useAuth();
+    
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        try {
+            await signUp( email, password);
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
   return (
     <>
       <div className='w-full h-screen'>
@@ -29,13 +42,17 @@ const Signup = () => {
             <div className='max-w-[450px] h-[600px] mx-auto rounded-xl bg-black/75 opacity-90 text-white'>
                 <div className='max-w-[320px] mx-auto py-16'>
                     <h1 className='text-3xl font-bold'>Sign Up</h1>
-                    <form className='w-full flex flex-col py-14'>
-                        <input className='p-3 my-2 bg-gray-700 rounded'
+                    <form onSubmit={handleSubmit} className='w-full flex flex-col py-14'>
+                        <input 
+                            onChange={(e) => setEmail(e.target.value)}
+                            className='p-3 my-2 bg-gray-700 rounded'
                             type="email" 
                             placeholder='Email' 
                             autoComplete='email'
                             />
-                        <input className='p-3 my-2 bg-gray-700 rounded'
+                        <input
+                            onChange={(e) => setPassword(e.target.value)} 
+                            className='p-3 my-2 bg-gray-700 rounded'
                             type="password" 
                             placeholder='Password' 
                             autoComplete='current-password'
@@ -62,4 +79,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default SignUp;

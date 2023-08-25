@@ -1,7 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { FC, useState, FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../provider/AuthProvider';
+import { SignUpFormValues } from './Signup';
  
-const Login = () => {
+const Login: FC<SignUpFormValues> = () => {
+    const navigate = useNavigate();
+    const [error, setError] = useState<any>('');
+    const [email, setEmail] = useState<any>('');
+    const [password, setPassword] = useState<any>('');
+    const {user, signIn} = useAuth();
+    
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError('');
+        try {
+            await signIn( email, password);
+            navigate('/')
+        } catch (error: any) {
+            console.log(error);
+            setError(error.message);
+        }
+    };
   return (
     <>
       <div className='w-full h-screen'>
@@ -15,13 +34,18 @@ const Login = () => {
             <div className='max-w-[450px] h-[600px] mx-auto rounded-xl bg-black/75 opacity-90 text-white'>
                 <div className='max-w-[320px] mx-auto py-16'>
                     <h1 className='text-3xl font-bold'>Sign In</h1>
-                    <form className='w-full flex flex-col py-14'>
-                        <input className='p-3 my-2 bg-gray-700 rounded'
+                    {error ? <p className='p-3 bg-red-500 my-3'>{error}</p> : null}
+                    <form onSubmit={handleSubmit} className='w-full flex flex-col py-14'>
+                        <input 
+                            onChange={(e) => setEmail(e.target.value)}
+                            className='p-3 my-2 bg-gray-700 rounded'
                             type="email" 
                             placeholder='Email' 
                             autoComplete='email'
                             />
-                        <input className='p-3 my-2 bg-gray-700 rounded'
+                        <input 
+                            onChange={(e) => setPassword(e.target.value)}
+                            className='p-3 my-2 bg-gray-700 rounded'
                             type="password" 
                             placeholder='Password' 
                             autoComplete='current-password'
@@ -42,7 +66,7 @@ const Login = () => {
                     </form>
                 </div>
             </div>
-        </div>
+        </div> 
       </div>
     </>
   )

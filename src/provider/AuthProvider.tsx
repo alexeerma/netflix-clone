@@ -14,6 +14,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signOut
 } from 'firebase/auth'
 
 export interface AuthProviderProps {
@@ -55,6 +56,11 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   function signIn(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(auth, email, password)
   }
+
+  function logOut() {
+    return signOut(auth);
+  }
+
   function resetPassword(email: string): Promise<void> {
     return sendPasswordResetEmail(auth, email)
   }
@@ -72,6 +78,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     signIn,
     resetPassword,
     auth,
+    logOut,
   }
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
 }
