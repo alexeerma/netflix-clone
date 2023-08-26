@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Movie } from '.';
 
 
-type RowProps = {
+export interface RowProps {
     title: string;
     fetchURL: string;
     rowID: string;

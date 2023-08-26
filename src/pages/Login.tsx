@@ -1,7 +1,7 @@
 import { FC, useState, FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../provider/AuthProvider';
-import { SignUpFormValues } from './Signup';
+import { SignUpFormValues } from './SignUp';
  
 const Login: FC<SignUpFormValues> = () => {
     const navigate = useNavigate();
