@@ -1,11 +1,33 @@
 import { FC } from 'react'
 import { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { useAuth } from '../provider/AuthProvider';
+import { db } from '../firebase';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 
 
 const Movie: FC = ({item}) => {
     const [like, setLike] = useState<boolean>(false);
+    const [saved, setSaved] = useState<boolean>(false); 
+    const { user } = useAuth();
 
+    const movieID = doc(db, 'users', `${user?.email}`);
+
+    const saveMovie = async () => {
+        if(user?.email) {
+            setLike(!like)
+            setSaved(true)
+            await updateDoc(movieID, {
+                savedMovies: arrayUnion({
+                    id: item.id,
+                    title: item.title,
+                    img: item.backdrop_path,
+                }),
+            });
+        } else {
+            alert('Please login to continue')
+        }
+    };
 
   return (
     <>
@@ -15,7 +37,7 @@ const Movie: FC = ({item}) => {
                 <p className='white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center'>
                     {item?.title}
                 </p>
-                <p>
+                <p onClick={saveMovie}>
                     {like ? <FaHeart className='absolute top-4 left-4 text-gray-300'/> : <FaRegHeart className='absolute top-4 left-4 text-gray-300'/> }
                 </p>
             </div>
